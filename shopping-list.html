@@ -20,40 +20,70 @@
 
     <h1>My shopping list</h1>
 
-    <div>
-      <label for="item">Enter a new item:</label>
+    <div class="fruits">
+      <label for="item">Enter a new fruit:</label>
       <input type="text" name="item" id="item">
-      <button>Add item</button>
+      <button name="fruits">Add fruit</button>
     </div>
-    <ul>
+
+    
+    <ul class="fruits-list">
 
     </ul>
 
+    <div class="cars">
+        <label for="item">Enter a new car:</label>
+        <input type="text" name="item" id="item">
+        <button name="cars">Add car</button>
+      </div>
+  
+      
+      <ul class="cars-list">
+  
+      </ul>
+
     <script>
-      const list = document.querySelector('ul');
-      const input = document.querySelector('input');
-      const button = document.querySelector('button');
 
-      button.addEventListener('click', () => {
-        const myItem = input.value;
-        input.value = '';
+    
+        
 
-        const listItem = document.createElement('li');
-        const listText = document.createElement('span');
-        const listBtn = document.createElement('button');
+        var list = document.querySelector('.fruits-list');
+        var input = document.querySelector('.fruits input');
+        var button = document.querySelector('.fruits button');
 
-        listItem.appendChild(listText);
-        listText.textContent = myItem;
-        listItem.appendChild(listBtn);
-        listBtn.textContent = 'Delete';
-        list.appendChild(listItem);
+        add_item_to_list(list,input,button);
 
-        listBtn.addEventListener('click', () => {
-          list.removeChild(listItem);
-        });
+        var car_list = document.querySelector('.cars-list');
+        var car_input = document.querySelector('.cars input');
+        var car_button = document.querySelector('.cars button');
 
-        input.focus();
-      });
+        add_item_to_list(car_list,car_input,car_button);
+
+        function add_item_to_list(list,input,button){
+        
+
+            button.addEventListener('click', () => {
+                const myItem = input.value;
+                input.value = '';
+
+                const listItem = document.createElement('li');
+                const listText = document.createElement('span');
+                const listBtn = document.createElement('button');
+
+                listItem.appendChild(listText);
+                listText.textContent = myItem;
+                listItem.appendChild(listBtn);
+                listBtn.textContent = 'Delete';
+                list.appendChild(listItem);
+
+                listBtn.addEventListener('click', () => {
+                list.removeChild(listItem);
+                });
+
+                input.focus();
+            });
+        }
+
     </script>
   </body>
 </html>

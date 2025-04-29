@@ -7,4 +7,4 @@ Create branches to test out different ideas
 - Create 2 Div
 - Each Dive with a name, and Add item
 
-Simple experiment on selector based on class
+Simple experiment on selector based on class, multiple items from drop down list.

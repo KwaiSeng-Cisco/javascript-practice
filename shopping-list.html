@@ -14,76 +14,148 @@
         margin-left: 20px;
         color: #666;
       }
+
+      select {
+      direction: rtl; 
+      vertical-align: top; 
+      }
     </style>
   </head>
   <body>
 
     <h1>My shopping list</h1>
 
-    <div class="fruits">
-      <label for="item">Enter a new fruit:</label>
-      <input type="text" name="item" id="item">
-      <button name="fruits">Add fruit</button>
-    </div>
+    <table>
+        <tr>
+            <th>Fruits</th>
+            <th>Cars</th>
+            <th>Hobby list</th>
+        </tr>
+        
+        <tr>
+            <th class = "fruit-entry"> 
+                <label for="new-fruit"> Enter a new fruit:</label>
+                <input type="text" name="name_of_fruit" id="name_of_fruit">
+                <button id="add-fruits">Add fruit</button>
+            </th>
+            <th class = "car-entry">
+                <label for="new-car">Enter a new car:</label>
+                <input type="text" name="name_of_car" id="name_of_car">
+                <button id="add-cars">Add car</button>
+            </th>
+<!---
+Refer to https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/select
+-->
 
-    
-    <ul class="fruits-list">
+            <th class = "hobby-entry">
+                <label for="new-hobby">Select some hobbies:</label>
+                <select name="name_of_hobby" id="name_of_hobby" multiple>
+                    <option value="Fishing">Fishing</option>
+                    <option value="Cycling">Cycling</option>
+                    <option value="Running">Running</option>
+                    <option value="Reading">Reading</option>
+                    <option value="Swimming">Swimming</option>
+                    <option value="Hiking">Hiking</option>
+                </select>
+                <button id="add-hobbies">Add Hobby</button>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <ul class="fruits-list">
 
-    </ul>
-
-    <div class="cars">
-        <label for="item">Enter a new car:</label>
-        <input type="text" name="item" id="item">
-        <button name="cars">Add car</button>
-      </div>
+                </ul>
+            </th>
+            <th>
+                <ul class="cars-list">
   
-      
-      <ul class="cars-list">
+                </ul>
+            </th>
+            <th>
+                <ul class="hobby-list">
   
-      </ul>
+                </ul>
+            </th>    
+        </tr>
+    </table>
+
 
     <script>
 
-    
-        
+        document.querySelector("#add-hobbies").addEventListener("click", () => {
+            var add_hobby_list = document.querySelector('.hobby-list');
+            var add_hobby_input = document.querySelector("#name_of_hobby");
+            console.log(add_hobby_input.TEXT_NODE)
 
-        var list = document.querySelector('.fruits-list');
-        var input = document.querySelector('.fruits input');
-        var button = document.querySelector('.fruits button');
+            var result = [];
+            var options = add_hobby_input && add_hobby_input.options;
+            var opt;
 
-        add_item_to_list(list,input,button);
+            console.log(options)
 
-        var car_list = document.querySelector('.cars-list');
-        var car_input = document.querySelector('.cars input');
-        var car_button = document.querySelector('.cars button');
+            for (var i=0, iLen=options.length; i<iLen; i++) {
+                opt = options[i];
 
-        add_item_to_list(car_list,car_input,car_button);
+                if (opt.selected) {
+                console.log("Value : ", opt.value, "Text :", opt.text)    
+                result.push(opt.value || opt.text);
+                add_item_to_list(add_hobby_list,opt);
+                }
+            }
+            
+        });
 
-        function add_item_to_list(list,input,button){
-        
 
-            button.addEventListener('click', () => {
-                const myItem = input.value;
-                input.value = '';
+        document.querySelector("#add-cars").addEventListener("click", () => {
+            var add_car_list = document.querySelector('.cars-list');
+            var add_car_input = document.querySelector("#name_of_car");
+            add_item_to_list(add_car_list,add_car_input);
+        }); 
 
-                const listItem = document.createElement('li');
-                const listText = document.createElement('span');
-                const listBtn = document.createElement('button');
+        document.querySelector("#add-fruits").addEventListener("click", () => {
+            var add_fruit_list = document.querySelector('.fruits-list');
+            var add_fruit_input = document.querySelector("#name_of_fruit");
+            add_item_to_list(add_fruit_list,add_fruit_input);
+        });
 
-                listItem.appendChild(listText);
-                listText.textContent = myItem;
-                listItem.appendChild(listBtn);
-                listBtn.textContent = 'Delete';
-                list.appendChild(listItem);
 
-                listBtn.addEventListener('click', () => {
-                list.removeChild(listItem);
-                });
+        function getSelectValues(select) {
+            var result = [];
+            var options = select && select.options;
+            var opt;
 
-                input.focus();
-            });
+            for (var i=0, iLen=options.length; i<iLen; i++) {
+                opt = options[i];
+
+                if (opt.selected) {
+                console.log("Value : ", opt.value, "Text :", opt.text)    
+                result.push(opt.value || opt.text);
+                }
+            }
+            return result;
         }
+        
+        function add_item_to_list(list,input){
+            const myItem = input.value;
+            input.value = '';
 
+            const listItem = document.createElement('li');
+            const listText = document.createElement('span');
+            const listBtn = document.createElement('button');
+
+            listItem.appendChild(listText);
+            listText.textContent = myItem;
+            listItem.appendChild(listBtn);
+            listBtn.textContent = 'Delete';
+            list.appendChild(listItem);
+
+            listBtn.addEventListener('click', () => {
+                list.removeChild(listItem);
+            });
+
+            input.focus();
+        }
+        
     </script>
   </body>
 </html>
